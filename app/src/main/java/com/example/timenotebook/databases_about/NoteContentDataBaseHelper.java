@@ -1,0 +1,195 @@
+package com.example.timenotebook.databases_about;
+
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.timenotebook.listview_padding_method.Padding_Method;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
+    public static final String CREATE_NOTE_TABLE = "create table Note ("
+            + "id_number integer primary key autoincrement,"
+            + "content longtext,"
+            + "createTime text,"
+            + "updateTime text,"
+            + "notetitle text,"
+            + "anchor long)";//记录最近一次同步时间
+
+    private Context notecontext;
+    private NoteContentDataBaseHelper dbHelper;
+
+    public NoteContentDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+        notecontext = context;
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_NOTE_TABLE);
+        Toast.makeText(notecontext, "初始化数据表成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    private int current_id_number;
+    private String current_content;
+    private String current_createTime;
+    private String current_updateTime;
+    private String current_notetitle;
+    private long current_anchor;
+    private List<Padding_Method> alist = new ArrayList<>();
+
+    //添加数据
+    public String AddData(String title_put_data, String content_put_data, String createTime_put_data, String updateTime_put_data) {
+        if (title_put_data.isEmpty() && content_put_data.isEmpty()) {
+            return "保存失败";
+        }else {
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("notetitle", title_put_data);
+            values.put("content", content_put_data);
+            values.put("createTime", createTime_put_data);
+            values.put("updateTime", updateTime_put_data);
+            db.insert("Note", null, values);
+            values.clear();
+//            Log.d("shit sky", title_put_data + "\\" + content_put_data);
+            return "保存成功";
+        }
+
+    }
+
+    //更新数据
+    public String UpdateData(Padding_Method Median_value) {
+
+        String title_put_data = Median_value.getListview_item_title();
+        String content_put_data = Median_value.getListview_item_content();
+        String updateTime_put_data = Median_value.getListview_item_update_time();
+
+        if (title_put_data.isEmpty() && content_put_data.isEmpty()) {
+            return "更改失败";
+        }else{
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("notetitle", title_put_data);
+            values.put("content", content_put_data);
+            values.put("updateTime", updateTime_put_data);
+            db.update("Note", values, "id_number=?", new String[] {String.valueOf(Median_value.getListview_item_id())});
+//            Toast.makeText(notecontext, "是"+Median_value.getListview_item_content(), Toast.LENGTH_SHORT).show();
+//            Log.d("test2","更新成功");
+            values.clear();
+            return  "更改成功";
+        }
+    }
+
+    //删除
+    public boolean Delete(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        int result = db.delete("Note", "id = ?", new String[]{id});
+        return result > 0;
+    }
+
+    //查寻表数据
+    @SuppressLint("Range")
+    public void Query(String str) {
+
+        //全表通查
+        Cursor cursor = getWritableDatabase().query("Note", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                //用cursor对象遍历，并将查询结果储存
+                switch (str) {
+                    case "id_number": {
+                        int id = cursor.getInt(cursor.getColumnIndex("id_number"));
+                        setId_number(id);
+                        break;
+                    }
+                    case "content": {
+                        String content = cursor.getString(cursor.getColumnIndex("content"));
+                        setContent(content);
+                        break;
+                    }
+                    case "createTime": {
+                        String createTime = cursor.getString(cursor.getColumnIndex("createTime"));
+                        setCreateTime(createTime);
+                        break;
+                    }
+                    case "updateTime": {
+                        String updateTime = cursor.getString(cursor.getColumnIndex("updateTime"));
+                        setUpdateTime(updateTime);
+                        break;
+                    }
+                    case "notetitle": {
+                        String notetitle = cursor.getString(cursor.getColumnIndex("notetitle"));
+                        setNotetitle(notetitle);
+                        break;
+                    }
+                    case "anchor": {
+                        long anchor = cursor.getLong(cursor.getColumnIndex("anchor"));
+                        setAnchor(anchor);
+                        break;
+                    }
+                    case "all": {
+                        int id = cursor.getInt(cursor.getColumnIndex("id_number"));
+                        String notetitle = cursor.getString(cursor.getColumnIndex("notetitle"));
+                        String content = cursor.getString(cursor.getColumnIndex("content"));
+                        String createTime = cursor.getString(cursor.getColumnIndex("createTime"));
+                        String updateTime = cursor.getString(cursor.getColumnIndex("updateTime"));
+                        long anchor = cursor.getLong(cursor.getColumnIndex("anchor"));
+                        build_list(id, notetitle, content, updateTime);
+                        break;
+                    }
+                }
+
+            }while (cursor.moveToNext()) ;
+            cursor.close();
+        }
+    }
+    public List<Padding_Method> getAlist(String str) {
+        Query(str);
+        return alist;
+    }
+
+    public void setId_number(int x) {
+        this.current_id_number = x;
+    }
+
+    public void setContent(String x) {
+        this.current_content = x;
+    }
+
+    public void setCreateTime(String x) {
+        this.current_createTime = x;
+    }
+
+    public void setUpdateTime(String x) {
+        this.current_updateTime = x;
+    }
+
+    public void setNotetitle(String x) {
+        this.current_notetitle = x;
+    }
+
+    public void setAnchor(long x) {
+        this.current_anchor = x;
+    }
+
+    public void build_list(int id, String title, String content, String update_time) {
+        alist.add(new Padding_Method(id, title, content, update_time));
+    }
+
+    public void Clear_Alist() {
+        alist.clear();
+    }
+}

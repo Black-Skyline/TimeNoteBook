@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/more_item"
+        android:title="更多"/>
+
+    <item
+        android:id="@+id/setting_item"
+        android:title="设置"/>
+
+    <item
+        android:id="@+id/delete_item"
+        android:title="删除"/>
+
+    <item
+        android:id="@+id/words_number_item"
+        android:title="字数统计"/>
+
+</menu>
