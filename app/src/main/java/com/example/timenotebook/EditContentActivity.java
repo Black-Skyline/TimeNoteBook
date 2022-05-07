@@ -18,10 +18,10 @@ public class EditContentActivity extends AppCompatActivity {
     private NoteContentDataBaseHelper dbHelper;
     private String title_put_data;
     private String content_put_data;
-    private String createTime_put_data;
     private String updateTime_put_data;
     private String state_value;
-
+    private Intent intent = new Intent();
+    private String current_id;
 /*
     未完成的菜单
  */
@@ -76,15 +76,30 @@ public class EditContentActivity extends AppCompatActivity {
         if (state_value.equals("change")) {
             title_put.setText(get_intent.getStringExtra("extra_data_title"));
             content_put.setText(get_intent.getStringExtra("extra_data_content"));
-        } else {
-
+            current_id = get_intent.getStringExtra("extra_data_id");
         }
-        dbHelper = new NoteContentDataBaseHelper(this, "MyNote.db", null, 1);
-
+        dbHelper = new NoteContentDataBaseHelper(this);
         //返回自动保存文本功能
         Button title_back = findViewById(R.id.top_back);
         title_back.setOnClickListener(view -> {
+            title_put_data = title_put.getText().toString();
+            content_put_data = content_put.getText().toString();
+            updateTime_put_data = GetTime.getTime("NO");
+            if (state_value.equals("change")) {
+                Padding_Method bean = new Padding_Method(Integer.valueOf(current_id),title_put_data,content_put_data,updateTime_put_data);
+                dbHelper.UpdateData(bean);
+            } else {
+                dbHelper.AddData(title_put_data, content_put_data, updateTime_put_data);
+            }
 
+            setResult(RESULT_OK,intent);
+            finish();
+        });
+
+/*
+        //返回自动保存文本功能
+        Button title_back = findViewById(R.id.top_back);
+        title_back.setOnClickListener(view -> {
             //判断是新建还是修改
             if (state_value.equals("change")) {
 
@@ -102,9 +117,9 @@ public class EditContentActivity extends AppCompatActivity {
             } else {
                 //Log.d("test","title_put_data是"+title_put_data);
                 //记录文本标题和内容数据
-                title_put_data = title_put.getText().toString();
-                content_put_data = content_put.getText().toString();
-                updateTime_put_data = GetTime.getTime("NO");
+                titlent_put_data = content_put.getText().toString();
+                updat_put_data = title_put.getText().toString();
+                conteeTime_put_data = GetTime.getTime("NO");
 
                 String str = null;
 
@@ -195,6 +210,6 @@ public class EditContentActivity extends AppCompatActivity {
                 finish();
             }
 
-        });
+        });*/
     }
 }

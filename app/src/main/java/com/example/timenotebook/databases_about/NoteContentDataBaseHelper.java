@@ -27,9 +27,12 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
     private Context notecontext;
     private NoteContentDataBaseHelper dbHelper;
 
-    public NoteContentDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-        notecontext = context;
+//    public NoteContentDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+//        super(context, name, factory, version);
+//        notecontext = context;
+//    }
+    public NoteContentDataBaseHelper(Context context){
+        super(context,"MyNote.db", null, 1);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
     private List<Padding_Method> alist = new ArrayList<>();
 
     //添加数据
-    public String AddData(String title_put_data, String content_put_data, String createTime_put_data, String updateTime_put_data) {
+    public String AddData(String title_put_data, String content_put_data, String updateTime_put_data) {
         if (title_put_data.isEmpty() && content_put_data.isEmpty()) {
             return "保存失败";
         }else {
@@ -60,7 +63,6 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put("notetitle", title_put_data);
             values.put("content", content_put_data);
-            values.put("createTime", createTime_put_data);
             values.put("updateTime", updateTime_put_data);
             db.insert("Note", null, values);
             values.clear();
@@ -96,7 +98,7 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
     //删除
     public boolean Delete(String id) {
         SQLiteDatabase db = getWritableDatabase();
-        int result = db.delete("Note", "id = ?", new String[]{id});
+        int result = db.delete("Note", "id_number= ? ", new String[]{id});
         return result > 0;
     }
 

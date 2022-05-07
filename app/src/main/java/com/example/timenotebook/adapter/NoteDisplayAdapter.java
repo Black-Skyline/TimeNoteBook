@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.example.timenotebook.R;
 import com.example.timenotebook.listview_padding_method.Padding_Method;
 
@@ -20,8 +21,8 @@ public class NoteDisplayAdapter extends BaseAdapter {
 
     public NoteDisplayAdapter(Context context, List<Padding_Method> data) {
         this.data = data;
-        inflater =  LayoutInflater.from(context);
-        this.context = context;
+        inflater = LayoutInflater.from(context);
+//        this.context = context;
     }
 
     @Override
@@ -43,7 +44,8 @@ public class NoteDisplayAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate (R.layout.listview_item_layout, null);
+//            convertView = LayoutInflater.from(context).inflate (R.layout.listview_item_layout, null);
+            convertView = inflater.inflate(R.layout.listview_item_layout, null);
         }
         Padding_Method Note = data.get(position);
         TextView id = convertView.findViewById(R.id.listview_id_number);
