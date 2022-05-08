@@ -9,23 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginHorizontal="20dp"
-        android:background="#C8FDF923"
+        android:background="@drawable/radius_shape_top"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="15dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/listview_id_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="1"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
 
         </LinearLayout>
 
@@ -48,12 +38,16 @@
                 android:singleLine="true"
                 android:textSize="35sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#527852FF"/>
+
             <TextView
                 android:id="@+id/listview_text_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-
                 android:text="内容为空"
                 android:maxLines="2"
                 android:singleLine="true"
@@ -73,15 +67,26 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:orientation="horizontal"
-        android:background="#C8FDF923">
+        android:background="@drawable/radius_shape_bottom">
+
+        <TextView
+            android:id="@+id/listview_crate_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/listview_update_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="250dp"
-            android:layout_gravity="end"
-            android:textSize="20sp" />
+            android:layout_marginEnd="15dp"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

@@ -3,12 +3,9 @@ package com.example.timenotebook.databases_about;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.timenotebook.listview_padding_method.Padding_Method;
 
@@ -24,13 +21,9 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
             + "notetitle text,"
             + "anchor long)";//记录最近一次同步时间
 
-    private Context notecontext;
-    private NoteContentDataBaseHelper dbHelper;
-
-//    public NoteContentDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-//        super(context, name, factory, version);
-//        notecontext = context;
-//    }
+    public NoteContentDataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
     public NoteContentDataBaseHelper(Context context){
         super(context,"MyNote.db", null, 1);
     }
@@ -38,7 +31,7 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_NOTE_TABLE);
-        Toast.makeText(notecontext, "初始化数据表成功", Toast.LENGTH_SHORT).show();
+//        Log.d("test","建表成功");
     }
 
     @Override
@@ -55,43 +48,38 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
     private List<Padding_Method> alist = new ArrayList<>();
 
     //添加数据
-    public String AddData(String title_put_data, String content_put_data, String updateTime_put_data) {
+    public void AddData(String title_put_data, String content_put_data, String createTime_put_data,String updateTime_put_data) {
         if (title_put_data.isEmpty() && content_put_data.isEmpty()) {
-            return "保存失败";
         }else {
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put("notetitle", title_put_data);
             values.put("content", content_put_data);
+            values.put("createTime", createTime_put_data);
             values.put("updateTime", updateTime_put_data);
             db.insert("Note", null, values);
             values.clear();
-//            Log.d("shit sky", title_put_data + "\\" + content_put_data);
-            return "保存成功";
         }
 
     }
 
     //更新数据
-    public String UpdateData(Padding_Method Median_value) {
+    public void UpdateData(Padding_Method Median_value) {
 
         String title_put_data = Median_value.getListview_item_title();
         String content_put_data = Median_value.getListview_item_content();
         String updateTime_put_data = Median_value.getListview_item_update_time();
 
         if (title_put_data.isEmpty() && content_put_data.isEmpty()) {
-            return "更改失败";
+            Delete(Median_value.getListview_item_id());
         }else{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put("notetitle", title_put_data);
             values.put("content", content_put_data);
             values.put("updateTime", updateTime_put_data);
-            db.update("Note", values, "id_number=?", new String[] {String.valueOf(Median_value.getListview_item_id())});
-//            Toast.makeText(notecontext, "是"+Median_value.getListview_item_content(), Toast.LENGTH_SHORT).show();
-//            Log.d("test2","更新成功");
+            db.update("Note", values, "id_number=?", new String[] {Median_value.getListview_item_id()});
             values.clear();
-            return  "更改成功";
         }
     }
 
@@ -149,7 +137,7 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
                         String createTime = cursor.getString(cursor.getColumnIndex("createTime"));
                         String updateTime = cursor.getString(cursor.getColumnIndex("updateTime"));
                         long anchor = cursor.getLong(cursor.getColumnIndex("anchor"));
-                        build_list(id, notetitle, content, updateTime);
+                        build_list(id, notetitle, content, createTime, updateTime);
                         break;
                     }
                 }
@@ -187,11 +175,7 @@ public class NoteContentDataBaseHelper extends SQLiteOpenHelper {
         this.current_anchor = x;
     }
 
-    public void build_list(int id, String title, String content, String update_time) {
-        alist.add(new Padding_Method(id, title, content, update_time));
-    }
-
-    public void Clear_Alist() {
-        alist.clear();
+    public void build_list(int id, String title, String content, String create_time, String update_time) {
+        alist.add(new Padding_Method(id, title, content, create_time, update_time));
     }
 }

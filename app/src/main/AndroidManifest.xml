@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/save_note"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/save_note"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeNoteBook">
         <activity
@@ -21,9 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TestActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

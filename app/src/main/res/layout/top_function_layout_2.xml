@@ -11,26 +11,29 @@
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:background="@drawable/back_2"/>
+        android:backgroundTint="#0D378A"
+        android:background="@drawable/back_2" />
 
     <TextView
+        android:id="@+id/text_top_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_marginHorizontal="40dp"
-        android:text="新建项目标题为空"
+        android:text="新建项目标题待定"
         android:textSize="25sp"
         android:textStyle="bold"
         android:maxLines="1"
         android:singleLine="true"/>
 
     <Button
-        android:id="@+id/save_note"
+        android:id="@+id/delete_note"
         android:layout_width="40dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:background="@drawable/save_note"/>
+        android:backgroundTint="#0D378A"
+        android:background="@drawable/delete"/>
 </LinearLayout>

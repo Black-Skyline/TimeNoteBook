@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/drawable/radius_shape.xml" value="0.129" />
+        <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/drawable/radius_shape_bottom.xml" value="0.129" />
         <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/edit_content_layout.xml" value="0.22" />
         <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/first_layout.xml" value="0.1" />
-        <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/listview_item_layout.xml" value="0.4555765595463138" />
+        <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/listview_item_layout.xml" value="0.33" />
         <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/main_layout.xml" value="0.25" />
         <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/top_function_layout.xml" value="0.25" />
-        <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/top_function_layout_1.xml" value="0.1328125" />
+        <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/top_function_layout_1.xml" value="0.5" />
         <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/layout/top_function_layout_2.xml" value="0.5" />
         <entry key="..\:/AndroidProjectFile/TimeNoteBook/app/src/main/res/menu/top_function_menu.xml" value="0.18" />
       </map>

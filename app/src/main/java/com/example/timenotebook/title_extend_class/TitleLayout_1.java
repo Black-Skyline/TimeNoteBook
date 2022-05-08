@@ -2,13 +2,11 @@ package com.example.timenotebook.title_extend_class;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.timenotebook.EditContentActivity;
 import com.example.timenotebook.R;
 
 public class TitleLayout_1 extends LinearLayout {
